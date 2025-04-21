@@ -1,0 +1,21 @@
+stages:
+  - test
+  - build
+
+test:
+  stage: test
+  image: golang:1.17
+  script:
+    - go mod init arsenka || true
+    - go mod tidy
+    - go test ./...
+  tags:
+    - docker
+
+build:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t arsenka:latest .
+  tags:
+    - docker
